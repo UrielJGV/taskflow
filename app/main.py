@@ -1,3 +1,9 @@
+
+from datetime import datetime, timezone
+
+from app.schemas import TaskCreate, TaskRead
+
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -39,3 +45,23 @@ def version():
 )
 def ping():
     return {"message": "pong"}  
+
+@app.post(
+    "/tasks",
+    response_model=TaskRead,
+    status_code=201,
+    summary="Crear una tarea simulada",
+    description=(
+        "Valida los datos de entrada y devuelve una tarea de ejemplo. "
+        "No guarda información en una base de datos."
+    ),
+    tags=["Tareas"],
+)
+def create_task(task: TaskCreate) -> TaskRead:
+    """Simula la creación de una tarea sin persistencia."""
+    return TaskRead(
+        **task.model_dump(),
+        id=1,
+        completed=False,
+        created_at=datetime.now(timezone.utc),
+    )
