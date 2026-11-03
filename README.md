@@ -1,6 +1,6 @@
 \# TaskFlow — Prácticas de desarrollo y despliegue
 
-
+| [1.4 — Middleware](practicas/desarrollo/1.4-middleware/) | CORS, tiempo de procesamiento, trazabilidad y manejo global de errores | Implementación propia sobre la práctica 1.3 |
 
 Proyecto educativo de una API de tareas y proyectos con FastAPI.
 

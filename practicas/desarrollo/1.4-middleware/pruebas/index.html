@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>TaskFlow — Prueba de CORS</title>
+</head>
+<body>
+  <h1>Comprobación de CORS</h1>
+  <p>Origen de esta página: <strong id="origen"></strong></p>
+
+  <button onclick="probar('/health')">Probar respuesta 200</button>
+  <button onclick="probar('/debug/error')">Probar respuesta 500</button>
+
+  <pre id="resultado">Pulsa un botón para comenzar.</pre>
+
+  <script>
+    document.getElementById("origen").textContent = location.origin;
+
+    async function probar(ruta) {
+      const salida = document.getElementById("resultado");
+      salida.textContent = "Consultando...";
+
+      try {
+        const respuesta = await fetch("http://127.0.0.1:8002" + ruta);
+        const datos = await respuesta.json();
+
+        salida.textContent = JSON.stringify({
+          ruta: ruta,
+          estado_http: respuesta.status,
+          tiempo_ms: respuesta.headers.get("X-Process-Time"),
+          request_id: respuesta.headers.get("X-Request-ID"),
+          cuerpo: datos
+        }, null, 2);
+      } catch (error) {
+        salida.textContent = "No se pudo leer la respuesta: " + error.message;
+      }
+    }
+  </script>
+</body>
+</html>
