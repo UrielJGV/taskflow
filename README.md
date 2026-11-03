@@ -140,3 +140,5 @@ no supone que todas las copias se hayan vuelto a ejecutar después
 
 de exportarlas.
 
+| [1.1 — Preparar el servidor base](practicas/despliegue/1.1-servidor-base/) | Ubuntu Server, máquina virtual y acceso SSH | Repositorio original de Despliegue |
+| [1.2 — Instalación básica de Apache](practicas/despliegue/1.2-apache/) | Servidor web Apache y comprobación del puerto 80 | Repositorio original de Despliegue |
