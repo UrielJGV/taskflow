@@ -27,6 +27,7 @@ Las primeras versiones se recuperaron del historial de Git para conservar la evo
 | [1.2 — Instalación básica de Apache](practicas/despliegue/1.2-apache/) | Servidor web Apache y comprobación del puerto 80. | Repositorio original de Despliegue |
 | [1.3 — Instalación de Gunicorn](practicas/despliegue/1.3-gunicorn/) | Ejecución del backend en Ubuntu Server. | Commit `e7ada53` |
 | [1.4 — Docker y primer contenedor](practicas/despliegue/1.4-docker/) | Imagen Docker, contenedor y comparación de arquitecturas. | Commit `17c5cd6` |
+| [2.1 — Módulos de Apache](practicas/despliegue/2.1-modulos-apache/) | Activación de módulos, verificación del servicio y documentación con ejemplos. | Configuración en Ubuntu Server |
 
 La numeración se repite porque las prácticas pertenecen a módulos distintos.
 
