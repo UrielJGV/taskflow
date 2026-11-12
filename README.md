@@ -17,6 +17,7 @@ Las primeras versiones se recuperaron del historial de Git para conservar la evo
 | [1.3 — Organización con APIRouter](practicas/desarrollo/1.3-apirouter/) | Rutas separadas por recurso y documentación Swagger agrupada. | Commit `ebbc322` |
 | [1.4 — Middleware](practicas/desarrollo/1.4-middleware/) | CORS, tiempo de procesamiento, trazabilidad y manejo global de errores. | Evolución de la práctica 1.3 |
 | [1.5 — SQLAlchemy y base de datos](practicas/desarrollo/1.5-sqlalchemy/) | Modelos relacionados, persistencia en SQLite, sesiones por petición y dependencias anidadas. | Evolución de la práctica 1.4 |
+| [1.6 — CRUD completo](practicas/desarrollo/1.6-crud/) | CRUD de tareas, proyectos y categorías; filtros, paginación, contadores y colección Postman. | Evolución de la práctica 1.5 |
 
 ### Despliegue de aplicaciones web
 
@@ -43,30 +44,32 @@ Los entornos virtuales no se incluyen en Git: deben crearse en el equipo donde s
 
 Las primeras prácticas de despliegue contienen documentación y evidencias de la configuración del servidor.
 
-## Práctica más reciente: SQLAlchemy
+## Práctica más reciente: CRUD completo
 
-La [práctica 1.5 de desarrollo](practicas/desarrollo/1.5-sqlalchemy/) incorpora:
+La [práctica 1.6 de desarrollo](practicas/desarrollo/1.6-crud/) incorpora:
 
-- Modelos `Task`, `Project`, `User` y `Category`.
-- Relaciones mediante claves foráneas y `back_populates`.
-- Comportamientos de eliminación definidos en los modelos.
-- Persistencia de proyectos, tareas y usuarios de prueba en SQLite.
-- Una sesión por petición mediante `get_db`.
-- Consultas con paginación y filtro de tareas por proyecto.
-- Dependencias anidadas mediante `get_current_user` y `get_db`.
-- Creación de las tablas al arrancar la aplicación.
-- Documentación del modelo de datos y de las comprobaciones funcionales.
+- Creación, listado, consulta, modificación y eliminación de tareas, proyectos y categorías.
+- Persistencia en SQLite mediante SQLAlchemy.
+- Filtros combinables de tareas por proyecto, estado, categoría y usuario asignado.
+- Paginación mediante `skip` y `limit`, con metadatos en la respuesta.
+- Ordenación ascendente y descendente.
+- Detalle de proyectos y categorías con sus tareas asociadas.
+- Endpoints de resumen con contadores de tareas.
+- Eliminación de proyectos con borrado en cascada de sus tareas.
+- Bloqueo del borrado de categorías que todavía tienen tareas.
+- Validación de datos y gestión de errores.
+- Colección Postman con 22 peticiones.
 
-Las relaciones opcionales con usuarios y categorías están definidas en los modelos. La API de tareas todavía no permite asignarlas mediante sus esquemas de entrada.
+Se conservan los middleware y la demostración de dependencias anidadas de las prácticas anteriores.
 
-La cabecera `X-User-ID` se utiliza para demostrar dependencias anidadas; no constituye un sistema de autenticación.
+La cabecera `X-User-ID` se utiliza como demostración y no constituye un sistema de autenticación.
 
 ### Ejecución en Windows
 
 Desde la raíz del repositorio:
 
 ```powershell
-cd .\practicas\desarrollo\1.5-sqlalchemy
+cd .\practicas\desarrollo\1.6-crud
 ```
 
 Crear el entorno virtual si todavía no existe:
@@ -84,14 +87,24 @@ Instalar las dependencias:
 Arrancar la API:
 
 ```powershell
-.\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --port 8003
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --port 8004
 ```
 
 Abrir la documentación interactiva:
 
-http://127.0.0.1:8003/docs
+http://127.0.0.1:8004/docs
 
 El archivo `taskflow.db` y las tablas se crean al arrancar. La base de datos local está excluida de Git.
+
+### Colección Postman
+
+[Descargar la colección de la práctica 1.6](practicas/desarrollo/1.6-crud/postman/TaskFlow-1.6-CRUD.postman_collection.json)
+
+La colección incluye las 15 operaciones CRUD obligatorias y peticiones adicionales para contadores, errores y cascada.
+
+Las peticiones utilizan URLs locales e identificadores concretos de la sesión de pruebas. Si se crean registros con otros identificadores, deben adaptarse las peticiones siguientes.
+
+Las instrucciones y los resultados esperados están en el [README de la práctica 1.6](practicas/desarrollo/1.6-crud/README.md).
 
 ## Documentación disponible
 
@@ -100,6 +113,7 @@ El archivo `taskflow.db` y las tablas se crean al arrancar. La base de datos loc
 - [Organización con APIRouter](practicas/desarrollo/1.3-apirouter/docs/routers.md)
 - [Middleware](practicas/desarrollo/1.4-middleware/README.md)
 - [SQLAlchemy y conexión a base de datos](practicas/desarrollo/1.5-sqlalchemy/README.md)
+- [CRUD completo y pruebas con Postman](practicas/desarrollo/1.6-crud/README.md)
 - [Instalación de Gunicorn](practicas/despliegue/1.3-gunicorn/docs/gunicorn.md)
 - [Docker y comparación de arquitecturas](practicas/despliegue/1.4-docker/docs/arquitectura.md)
 
@@ -118,19 +132,27 @@ Las evidencias incorporadas al repositorio para las primeras prácticas de despl
 
 Las capturas de otras prácticas pueden estar en los documentos entregados por Classroom. Recuperar una versión del código desde Git no incorpora automáticamente esas capturas.
 
+La colección Postman contiene las definiciones de las peticiones. Las capturas documentan las respuestas observadas durante las pruebas manuales.
+
 ## Estado del proyecto original
 
 La carpeta `app/` situada en la raíz conserva la versión de trabajo utilizada antes de organizar las prácticas.
 
 También se mantienen los archivos de despliegue y la documentación originales.
 
-Las entregas separadas y sus instrucciones se consultan desde `practicas/`. Para ejecutar la versión con persistencia, debe utilizarse la carpeta `practicas/desarrollo/1.5-sqlalchemy/`.
+Las entregas separadas y sus instrucciones se consultan desde `practicas/`.
+
+Para ejecutar la versión más reciente, con CRUD completo, debe utilizarse la carpeta `practicas/desarrollo/1.6-crud/`.
 
 ## Evolución y alcance
 
 Las primeras versiones utilizan operaciones simuladas de creación de tareas y proyectos.
 
-La práctica 1.5 añade persistencia real en SQLite. Este cambio pertenece a su carpeta y no modifica las versiones anteriores.
+La práctica 1.5 añade persistencia real en SQLite, modelos relacionados y sesiones por petición.
+
+La práctica 1.6 amplía esa base con CRUD completo, categorías, filtros, paginación, contadores y reglas de borrado comprobadas mediante peticiones HTTP.
+
+Cada cambio pertenece a la carpeta de su práctica y conserva las versiones anteriores.
 
 La reorganización conserva el código de cada entrega; no implica que todas las versiones históricas hayan vuelto a ejecutarse después de exportarlas.
 
