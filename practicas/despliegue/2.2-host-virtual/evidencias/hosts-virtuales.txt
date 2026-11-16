@@ -1,0 +1,20 @@
+VirtualHost configuration:
+*:80                   is a NameVirtualHost
+         default server localhost (/etc/apache2/sites-enabled/000-localhost.conf:1)
+         port 80 namevhost localhost (/etc/apache2/sites-enabled/000-localhost.conf:1)
+         port 80 namevhost taskflow.local (/etc/apache2/sites-enabled/taskflow.conf:1)
+ServerRoot: "/etc/apache2"
+Main DocumentRoot: "/var/www/html"
+Main ErrorLog: "/var/log/apache2/error.log"
+Mutex default: dir="/var/run/apache2/" mechanism=default 
+Mutex watchdog-callback: using_defaults
+Mutex rewrite-map: using_defaults
+Mutex ssl-stapling-refresh: using_defaults
+Mutex ssl-stapling: using_defaults
+Mutex proxy: using_defaults
+Mutex ssl-cache: using_defaults
+PidFile: "/var/run/apache2/apache2.pid"
+Define: DUMP_VHOSTS
+Define: DUMP_RUN_CFG
+User: name="www-data" id=33
+Group: name="www-data" id=33

@@ -28,6 +28,7 @@ Las primeras versiones se recuperaron del historial de Git para conservar la evo
 | [1.3 — Instalación de Gunicorn](practicas/despliegue/1.3-gunicorn/) | Ejecución del backend en Ubuntu Server. | Commit `e7ada53` |
 | [1.4 — Docker y primer contenedor](practicas/despliegue/1.4-docker/) | Imagen Docker, contenedor y comparación de arquitecturas. | Commit `17c5cd6` |
 | [2.1 — Módulos de Apache](practicas/despliegue/2.1-modulos-apache/) | Activación de módulos, verificación del servicio y documentación con ejemplos. | Configuración en Ubuntu Server |
+| [2.2 — Host virtual taskflow.local](practicas/despliegue/2.2-host-virtual/) | Página estática, hosts virtuales independientes y registros separados. | Configuración en Ubuntu Server |
 
 La numeración se repite porque las prácticas pertenecen a módulos distintos.
 
@@ -36,16 +37,16 @@ La numeración se repite porque las prácticas pertenecen a módulos distintos.
 1. Seleccionar el módulo y la práctica en las tablas anteriores.
 2. Leer su README y la documentación asociada.
 3. Consultar el código de esa entrega, cuando corresponda.
-4. Instalar las dependencias de su propio `requirements.txt`.
-5. Ejecutar los comandos desde la carpeta de esa práctica.
+4. Instalar las dependencias de su propio `requirements.txt`, cuando exista.
+5. Ejecutar los comandos desde la carpeta y el entorno indicados en esa práctica.
 
 Las prácticas de desarrollo contienen copias independientes de su código. No necesitan importar archivos de otras carpetas de prácticas.
 
 Los entornos virtuales no se incluyen en Git: deben crearse en el equipo donde se vaya a ejecutar cada ejercicio.
 
-Las primeras prácticas de despliegue contienen documentación y evidencias de la configuración del servidor.
+Las prácticas de despliegue contienen documentación, configuraciones y evidencias del servidor.
 
-## Práctica más reciente: CRUD completo
+## Práctica más reciente de desarrollo: CRUD completo
 
 La [práctica 1.6 de desarrollo](practicas/desarrollo/1.6-crud/) incorpora:
 
@@ -107,6 +108,26 @@ Las peticiones utilizan URLs locales e identificadores concretos de la sesión d
 
 Las instrucciones y los resultados esperados están en el [README de la práctica 1.6](practicas/desarrollo/1.6-crud/README.md).
 
+## Práctica más reciente de despliegue: host virtual taskflow.local
+
+La [práctica 2.2 de despliegue](practicas/despliegue/2.2-host-virtual/) incluye:
+
+- Una página estática sencilla de TaskFlow.
+- Un host virtual con `ServerName taskflow.local`.
+- Publicación desde `/var/www/taskflow`.
+- Un sitio `localhost` independiente, con contenido diferente.
+- Desactivación del sitio inicial `000-default.conf`.
+- Registros de acceso y errores propios para cada sitio.
+- Resolución local del nombre mediante el archivo `hosts`.
+- Evidencias de sintaxis, hosts activos y peticiones HTTP con respuesta `200`.
+- Explicación del funcionamiento de los hosts virtuales y un ejemplo de ampliación.
+
+La página utiliza datos de demostración. No está conectada a la API ni guarda cambios en una base de datos.
+
+El acceso se realiza mediante HTTP. Esta práctica no incluye HTTPS.
+
+La dirección `http://taskflow.local` funciona en los equipos que tengan configurada la resolución del nombre y acceso al servidor; no es una dirección pública.
+
 ## Documentación disponible
 
 - [Servidor base](practicas/despliegue/1.1-servidor-base/README.md)
@@ -117,6 +138,10 @@ Las instrucciones y los resultados esperados están en el [README de la práctic
 - [CRUD completo y pruebas con Postman](practicas/desarrollo/1.6-crud/README.md)
 - [Instalación de Gunicorn](practicas/despliegue/1.3-gunicorn/docs/gunicorn.md)
 - [Docker y comparación de arquitecturas](practicas/despliegue/1.4-docker/docs/arquitectura.md)
+- [Módulos de Apache](practicas/despliegue/2.1-modulos-apache/README.md)
+- [Explicación y ejemplos de módulos](practicas/despliegue/2.1-modulos-apache/docs/modulos-apache.md)
+- [Host virtual taskflow.local](practicas/despliegue/2.2-host-virtual/README.md)
+- [Funcionamiento de los hosts virtuales](practicas/despliegue/2.2-host-virtual/docs/hosts-virtuales.md)
 
 Algunos documentos describen el proceso original y pueden mencionar las ubicaciones de trabajo utilizadas durante las prácticas.
 
@@ -126,10 +151,14 @@ Para ejecutar las copias organizadas, hay que situarse en la carpeta concreta de
 
 Las capturas de las pruebas se recogen en los documentos de entrega correspondientes.
 
-Las evidencias incorporadas al repositorio para las primeras prácticas de despliegue están disponibles aquí:
+Las evidencias incorporadas al repositorio están disponibles aquí:
 
 - [Evidencias del servidor base](practicas/despliegue/1.1-servidor-base/evidencias-servidor-base.pdf)
 - [Evidencias de Apache](practicas/despliegue/1.2-apache/docs/evidencias-apache.pdf)
+- [Evidencias de módulos de Apache](practicas/despliegue/2.1-modulos-apache/evidencias/)
+- [Evidencias del host virtual taskflow.local](practicas/despliegue/2.2-host-virtual/evidencias/)
+
+Las configuraciones de los hosts virtuales se conservan en la [carpeta config de la práctica 2.2](practicas/despliegue/2.2-host-virtual/config/).
 
 Las capturas de otras prácticas pueden estar en los documentos entregados por Classroom. Recuperar una versión del código desde Git no incorpora automáticamente esas capturas.
 
@@ -143,7 +172,9 @@ También se mantienen los archivos de despliegue y la documentación originales.
 
 Las entregas separadas y sus instrucciones se consultan desde `practicas/`.
 
-Para ejecutar la versión más reciente, con CRUD completo, debe utilizarse la carpeta `practicas/desarrollo/1.6-crud/`.
+Para ejecutar la versión más reciente de la API, con CRUD completo, debe utilizarse la carpeta `practicas/desarrollo/1.6-crud/`.
+
+La página estática de la práctica 2.2 se encuentra en `practicas/despliegue/2.2-host-virtual/frontend/`.
 
 ## Evolución y alcance
 
@@ -152,6 +183,8 @@ Las primeras versiones utilizan operaciones simuladas de creación de tareas y p
 La práctica 1.5 añade persistencia real en SQLite, modelos relacionados y sesiones por petición.
 
 La práctica 1.6 amplía esa base con CRUD completo, categorías, filtros, paginación, contadores y reglas de borrado comprobadas mediante peticiones HTTP.
+
+En despliegue, la práctica 2.1 configura módulos de Apache y la práctica 2.2 publica una página estática mediante hosts virtuales con contenido y registros separados.
 
 Cada cambio pertenece a la carpeta de su práctica y conserva las versiones anteriores.
 
