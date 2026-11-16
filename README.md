@@ -29,6 +29,7 @@ Las primeras versiones se recuperaron del historial de Git para conservar la evo
 | [1.4 — Docker y primer contenedor](practicas/despliegue/1.4-docker/) | Imagen Docker, contenedor y comparación de arquitecturas. | Commit `17c5cd6` |
 | [2.1 — Módulos de Apache](practicas/despliegue/2.1-modulos-apache/) | Activación de módulos, verificación del servicio y documentación con ejemplos. | Configuración en Ubuntu Server |
 | [2.2 — Host virtual taskflow.local](practicas/despliegue/2.2-host-virtual/) | Página estática, hosts virtuales independientes y registros separados. | Configuración en Ubuntu Server |
+| [2.3 — Autenticación básica de admin](practicas/despliegue/2.3-autenticacion-basica/) | Protección de /admin con contraseña, permisos y pruebas HTTP 401/200. | Configuración en Ubuntu Server |
 
 La numeración se repite porque las prácticas pertenecen a módulos distintos.
 
@@ -108,7 +109,7 @@ Las peticiones utilizan URLs locales e identificadores concretos de la sesión d
 
 Las instrucciones y los resultados esperados están en el [README de la práctica 1.6](practicas/desarrollo/1.6-crud/README.md).
 
-## Práctica más reciente de despliegue: host virtual taskflow.local
+## Publicación del sitio: host virtual taskflow.local
 
 La [práctica 2.2 de despliegue](practicas/despliegue/2.2-host-virtual/) incluye:
 
@@ -124,9 +125,29 @@ La [práctica 2.2 de despliegue](practicas/despliegue/2.2-host-virtual/) incluye
 
 La página utiliza datos de demostración. No está conectada a la API ni guarda cambios en una base de datos.
 
-El acceso se realiza mediante HTTP. Esta práctica no incluye HTTPS.
-
 La dirección `http://taskflow.local` funciona en los equipos que tengan configurada la resolución del nombre y acceso al servidor; no es una dirección pública.
+
+## Práctica más reciente de despliegue: autenticación básica de admin
+
+La [práctica 2.3 de despliegue](practicas/despliegue/2.3-autenticacion-basica/) continúa la configuración de la práctica 2.2 e incorpora:
+
+- Una página de administración en `/var/www/taskflow/admin`.
+- Protección del directorio mediante autenticación HTTP básica.
+- Un usuario `admin` creado con `htpasswd`.
+- Almacenamiento de la contraseña mediante un hash bcrypt.
+- Archivo de contraseñas situado fuera del directorio publicado.
+- Permisos de lectura para Apache y modificación para root.
+- Acceso restringido mediante `Require user admin`.
+- Pruebas con respuesta `401` sin credenciales y `200` con credenciales correctas.
+- Documentación sobre contraseñas, gestión de usuarios y alternativas de autenticación.
+
+La configuración y las evidencias se conservan en la carpeta de la práctica.
+
+El archivo `.htpasswd` y la contraseña no se incluyen en el repositorio.
+
+La protección corresponde a una página estática servida por Apache. No implementa autenticación en la API FastAPI.
+
+Esta práctica utiliza HTTP en un entorno de laboratorio. La autenticación básica codifica las credenciales en Base64, pero no las cifra. En un entorno real debe utilizarse HTTPS.
 
 ## Documentación disponible
 
@@ -142,6 +163,7 @@ La dirección `http://taskflow.local` funciona en los equipos que tengan configu
 - [Explicación y ejemplos de módulos](practicas/despliegue/2.1-modulos-apache/docs/modulos-apache.md)
 - [Host virtual taskflow.local](practicas/despliegue/2.2-host-virtual/README.md)
 - [Funcionamiento de los hosts virtuales](practicas/despliegue/2.2-host-virtual/docs/hosts-virtuales.md)
+- [Autenticación básica de admin](practicas/despliegue/2.3-autenticacion-basica/README.md)
 
 Algunos documentos describen el proceso original y pueden mencionar las ubicaciones de trabajo utilizadas durante las prácticas.
 
@@ -157,8 +179,12 @@ Las evidencias incorporadas al repositorio están disponibles aquí:
 - [Evidencias de Apache](practicas/despliegue/1.2-apache/docs/evidencias-apache.pdf)
 - [Evidencias de módulos de Apache](practicas/despliegue/2.1-modulos-apache/evidencias/)
 - [Evidencias del host virtual taskflow.local](practicas/despliegue/2.2-host-virtual/evidencias/)
+- [Evidencias de autenticación básica](practicas/despliegue/2.3-autenticacion-basica/evidencias/)
 
-Las configuraciones de los hosts virtuales se conservan en la [carpeta config de la práctica 2.2](practicas/despliegue/2.2-host-virtual/config/).
+Las configuraciones de Apache se conservan en:
+
+- [Configuración de los hosts virtuales de la práctica 2.2](practicas/despliegue/2.2-host-virtual/config/)
+- [Configuración con autenticación de la práctica 2.3](practicas/despliegue/2.3-autenticacion-basica/config/)
 
 Las capturas de otras prácticas pueden estar en los documentos entregados por Classroom. Recuperar una versión del código desde Git no incorpora automáticamente esas capturas.
 
@@ -176,6 +202,8 @@ Para ejecutar la versión más reciente de la API, con CRUD completo, debe utili
 
 La página estática de la práctica 2.2 se encuentra en `practicas/despliegue/2.2-host-virtual/frontend/`.
 
+La página de administración de la práctica 2.3 se encuentra en `practicas/despliegue/2.3-autenticacion-basica/admin/`.
+
 ## Evolución y alcance
 
 Las primeras versiones utilizan operaciones simuladas de creación de tareas y proyectos.
@@ -184,9 +212,9 @@ La práctica 1.5 añade persistencia real en SQLite, modelos relacionados y sesi
 
 La práctica 1.6 amplía esa base con CRUD completo, categorías, filtros, paginación, contadores y reglas de borrado comprobadas mediante peticiones HTTP.
 
-En despliegue, la práctica 2.1 configura módulos de Apache y la práctica 2.2 publica una página estática mediante hosts virtuales con contenido y registros separados.
+En despliegue, la práctica 2.1 configura módulos de Apache, la práctica 2.2 publica una página estática mediante hosts virtuales con contenido y registros separados, y la práctica 2.3 protege una zona de administración mediante autenticación básica.
 
-Cada cambio pertenece a la carpeta de su práctica y conserva las versiones anteriores.
+Cada cambio pertenece a la carpeta de su práctica y conserva las versiones anteriores. Las configuraciones de despliegue guardadas representan el estado de cada entrega; el servidor puede continuar evolucionando en las prácticas siguientes.
 
 La reorganización conserva el código de cada entrega; no implica que todas las versiones históricas hayan vuelto a ejecutarse después de exportarlas.
 
