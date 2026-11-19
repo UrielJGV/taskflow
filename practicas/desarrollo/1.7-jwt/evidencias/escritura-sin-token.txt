@@ -1,0 +1,6 @@
+﻿tasks POST: 401
+tasks PUT: 401
+tasks DELETE: 401
+projects POST: 401
+projects PUT: 401
+projects DELETE: 401

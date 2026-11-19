@@ -1,0 +1,11 @@
+﻿HTTP/1.1 401 Unauthorized
+date: Thu, 19 Nov 2026 09:38:25 GMT
+server: uvicorn
+www-authenticate: Bearer
+content-length: 53
+content-type: application/json
+vary: Origin
+x-process-time: 1.571
+x-request-id: 9cdf7848-00e6-4364-aa8d-f69315485f81
+
+{"detail":"No se pudieron validar las credenciales."}

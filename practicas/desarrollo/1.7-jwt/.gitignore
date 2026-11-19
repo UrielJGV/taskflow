@@ -1,0 +1,11 @@
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.vscode/
+# Base de datos SQLite local y archivos auxiliares
+taskflow.db
+taskflow.db-journal
+taskflow.db-wal
+taskflow.db-shmS
